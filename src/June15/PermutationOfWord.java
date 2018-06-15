@@ -10,7 +10,7 @@ public class PermutationOfWord {
 
     public static void main(String args[]) {
 
-        userInput = "testCase";
+        userInput = "abcd";
 
         System.out.println(getPermutations(userInput));
 
