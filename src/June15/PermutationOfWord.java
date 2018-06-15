@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 public class PermutationOfWord {
 
+    private static String userInput;
+
     public static void main(String args[]) {
 
-        String userInput = "abc";
+        userInput = "testCase";
 
         System.out.println(getPermutations(userInput));
 

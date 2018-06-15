@@ -4,18 +4,33 @@ import java.util.ArrayList;
 
 public class Subsequences {
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
+
+        System.out.println(getSS("abc"));
 
     }
 
-    private static ArrayList<String> getSS(String str){
+    private static ArrayList<String> getSS(String str) {
 
-        char ch = str.charAt(0);
-        String rest = str.substring(1);
+        ArrayList<String> myResult = new ArrayList<>();
 
-        ArrayList<String> result = new ArrayList<>();
+        if (str.length() == 0) {
+            myResult.add("");
+            return myResult;
+        }
 
-        return result;
+        char setAside = str.charAt(0);
+
+        ArrayList<String> recursionResult = getSS(str.substring(1));
+
+        for (String x : recursionResult) {
+
+            myResult.add(x);
+            myResult.add(setAside + x);
+
+        }
+
+        return myResult;
 
     }
 }
