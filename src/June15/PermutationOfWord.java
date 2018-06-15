@@ -33,7 +33,6 @@ public class PermutationOfWord {
         // pick one element of the recursionResult
         for (String x : recursionResult) {
 
-
             for (int counter = 0; counter <= x.length(); counter++) {
 
                 // first break the string x into 2 parts
