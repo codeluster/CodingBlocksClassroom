@@ -6,8 +6,6 @@ public class Subsequences {
 
     public static void main(String args[]){
 
-
-
     }
 
     private static ArrayList<String> getSS(String str){
