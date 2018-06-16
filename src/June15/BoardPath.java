@@ -20,7 +20,9 @@ public class BoardPath {
 
         // base case
         if (startingPosition == finalPosition) {
+
             myResult.add("");
+
         } else {
 
             for (int dice = 1; dice <= 6 && (dice + startingPosition <= finalPosition); dice++) {
@@ -40,4 +42,5 @@ public class BoardPath {
         return myResult;
 
     }
+
 }
