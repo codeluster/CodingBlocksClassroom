@@ -10,7 +10,7 @@ public class SubsequencesWithPrintApproach {
 
     }
 
-    public static void getSubSequences(String question, String answer) {
+    private static void getSubSequences(String question, String answer) {
 
         if (question.equals("")) {
             System.out.println(answer);
