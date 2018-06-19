@@ -1,4 +1,4 @@
-package June19;
+package June19.Stack;
 
 public class StackClient {
 
@@ -13,6 +13,7 @@ public class StackClient {
         System.out.println(stack.pop());
         stack.push(289164);
         System.out.println(stack.peek());
+
     }
 
 }

@@ -1,14 +1,15 @@
-package June15;
+package June15.Recusrion_ArrayList;
 
 import java.util.ArrayList;
 
-public class Subsequences {
+public class SubsequenesWithASCII {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         System.out.println(getSS("abc"));
 
     }
+
 
     private static ArrayList<String> getSS(String str) {
 
@@ -27,10 +28,12 @@ public class Subsequences {
 
             myResult.add(x);
             myResult.add(setAside + x);
+            myResult.add((int)setAside + x);
 
         }
 
         return myResult;
 
     }
+
 }

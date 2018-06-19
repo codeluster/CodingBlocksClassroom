@@ -1,4 +1,4 @@
-package June19;
+package June19.Stack;
 
 public class Stack {
 

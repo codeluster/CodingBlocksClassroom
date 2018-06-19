@@ -1,4 +1,4 @@
-package June17;
+package June17.Recursion_Print;
 
 public class PermutationWithPrintApproach {
 

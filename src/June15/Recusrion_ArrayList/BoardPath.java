@@ -1,4 +1,4 @@
-package June15;
+package June15.Recusrion_ArrayList;
 
 // To find all the paths that lead to 10 when a die is thrown
 // Possible moves are from 1 to 6

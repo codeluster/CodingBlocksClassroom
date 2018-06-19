@@ -1,4 +1,4 @@
-package June17;
+package June17.Recursion_ArrayList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
