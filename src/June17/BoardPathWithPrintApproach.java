@@ -6,7 +6,6 @@ public class BoardPathWithPrintApproach {
 
         System.out.print(getBoardPath(0, 10, ""));
 
-
     }
 
     private static int getBoardPath(int curr, int end, String ans) {

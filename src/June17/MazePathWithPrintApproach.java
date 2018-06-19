@@ -4,7 +4,7 @@ public class MazePathWithPrintApproach {
 
     public static void main(String[] args) {
 
-        getPath(0, 0, 2, 2, "");
+        System.out.println(getPath(0, 0, 2, 2, ""));
 
     }
 
