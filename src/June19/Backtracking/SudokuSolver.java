@@ -2,68 +2,94 @@ package June19.Backtracking;
 
 public class SudokuSolver {
 
-    public static void main(String[] segviuefgbewkg) {
-/*
-        int[][] puzzle = new int[9][9];
+    public static void main(String[] __) {
 
-        solveSudoku(puzzle, 0);*/
+        int[][] puzzle =
+                {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+                        {5, 2, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 8, 7, 0, 0, 0, 0, 3, 1},
+                        {0, 0, 3, 0, 1, 0, 0, 8, 0},
+                        {9, 0, 0, 8, 6, 3, 0, 0, 5},
+                        {0, 5, 0, 0, 9, 0, 6, 0, 0},
+                        {1, 3, 0, 0, 0, 0, 2, 5, 0},
+                        {0, 0, 0, 0, 0, 0, 0, 7, 4},
+                        {0, 0, 5, 2, 0, 6, 3, 0, 0}};
 
-
+        solver(puzzle, 0, 0);
 
     }
-/*
 
-    private static void solveSudoku(int[][] puzzle, int row) {
+    private static void displayPuzzle(int[][] puzzle) {
 
-        //loop through individual columns
-        for (int column = 0; column < puzzle[0].length; column++) {
-
-            if (!(puzzle[row][column] == 0)) {
-
-
+        for (int row = 0; row < puzzle.length; row++) {
+            for (int column = 0; column < puzzle[row].length; column++) {
+                System.out.print(puzzle[row][column] + "\t");
             }
-
+            System.out.println();
         }
 
     }
 
-    private static int[] getPossible(int[] row, int[] column, int[] box) {
+    private static boolean solver(int[][] puzzle, int row, int column) {
 
-        boolean x1 = false;
-        boolean x2 = false;
-        boolean x3 = false;
-        boolean x4 = false;
-        boolean x5 = false;
-        boolean x6 = false;
-        boolean x7 = false;
-        boolean x8 = false;
-        boolean x9 = false;
+        // All rows have been filled
+        if (row == puzzle.length) {
 
-        for (int x : row) {
-            switch (x) {
-                case 1:
-                    x1 = true;
-                case 2:
-                    x2 = true;
-                case 3:
-                    x3 = true;
-                case 4:
-                    x4 = true;
-                case 5:
-                    x5 = true;
-                case 6:
-                    x6 = true;
-                case 7:
-                    x7 = true;
-                case 8:
-                    x8 = true;
-                case 9:
-                    x9 = true;
-            }
+            //Print the solved puzzle
+            displayPuzzle(puzzle);
+
+            //Return true because a solution is possible
+            return true;
         }
 
+        //Last column has been filled
+        //Reset to move to next row and start from first column
+        if (column == puzzle[0].length) {
+            return solver(puzzle, row + 1, 0);
+        }
+
+        for (int i = 1; i <= 9; i++) {
+
+            //Only if the spot is not already filled and if it is safe to put this number here
+            if (puzzle[row][column] == 0 && isItSafe(puzzle, row, column, i)) {
+                //Fill the current space with a number from the loop
+                puzzle[row][column] = i;
+                //Move to the next spot
+                return solver(puzzle, row, column + 1);
+            } else {
+                return solver(puzzle, row, column);
+            }
+
+        }
+
+        return false;
+    }
+
+
+    private static boolean isItSafe(int[][] puzzle, int row, int column, int number) {
+
+        return isItSafeRow(puzzle, row, number) && isItSafeColumn(puzzle, column, row);
 
     }
-*/
+
+    private static boolean isItSafeRow(int[][] puzzle, int row, int number) {
+
+        for (int column = 0; column < puzzle[row].length; column++) {
+            if (puzzle[row][column] == number) return false;
+        }
+
+        return true;
+
+    }
+
+    private static boolean isItSafeColumn(int[][] puzzle, int column, int number) {
+
+        for (int row = 0; column < puzzle.length; row++) {
+            if (puzzle[row][column] == number) return false;
+        }
+
+        return true;
+
+    }
 }
 
