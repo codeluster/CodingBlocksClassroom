@@ -18,9 +18,8 @@ public class SudokuSolver {
         if (solver(puzzle, 0, 0)) {
             displayPuzzle(puzzle);
         } else {
-            System.out.println("It is not possible to solve this puzzle");
+            System.out.println("It is not possible to solve this puzzle.");
         }
-
 
     }
 
@@ -119,5 +118,6 @@ public class SudokuSolver {
         return true;
 
     }
+
 }
 
