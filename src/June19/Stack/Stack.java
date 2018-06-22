@@ -5,7 +5,6 @@ public class Stack {
     private int[] dataSource;
     private int top_of_stack = -1;
 
-
     // Creates a new stack with default size of 5
     public Stack() {
         dataSource = new int[5];
