@@ -4,41 +4,61 @@ import June19.Stack.Stack;
 
 public class nextGreater {
 
-    public static void main(String[] aribfe) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-        Stack input = new Stack();
-        input.push(2);
-        input.push(5);
-        input.push(13);
-        input.push(1);
-        input.push(6);
-        input.push(25);
-
-        getGreater(input, new Stack());
+        int[] input = {5, 6, 10, 30, 40};
+        xNextGreater(input);
 
     }
 
-    private static void getGreater(Stack s, Stack remaining) throws Exception {
+    // My attempt
+    private static void mNextGreater(int[] input) throws Exception {
 
-        if (s.isEmpty()) {
-            return;
-        }
+        Stack stack = new Stack();
 
-        int temp = s.pop();
-        getGreater(s, remaining);
-        Stack remaining2 = new Stack();
-        while (!remaining.isEmpty()) {
-            int fdio = remaining.pop();
-            if (temp > fdio) {
-                System.out.println("(" + temp + "," + fdio + ")");
-            } else {
-                remaining2.push(fdio);
+        stack.push(input[0]);
+
+        Stack stack1 = new Stack();
+
+        for (int i = 1; i < input.length; i++) {
+
+            if (i == (input.length - 1)) {
+                stack.push(input[i]);
+                while (!stack.isEmpty()) {
+                    System.out.println("(" + stack.pop() + ",-1)");
+                }
             }
+            while (!stack.isEmpty()) {
+                if (stack.peek() < input[i]) {
+                    System.out.println("(" + stack.pop() + "," + input[i] + ")");
+                } else {
+                    stack1.push(stack.pop());
+                }
+            }
+            stack = stack1;
+            stack.push(input[i]);
         }
-        remaining = remaining2;
-
 
     }
 
+    //Actual Solution
+    private static void xNextGreater(int[] input) throws Exception {
 
+        Stack s = new Stack();
+
+        for (int num : input) {
+
+            while (!s.isEmpty() && s.peek() < num) {
+                System.out.println("(" + s.pop() + "," + num + ")");
+            }
+
+            s.push(num);
+
+        }
+
+        while (!s.isEmpty()) {
+            System.out.println("(" + s.pop() + ",-1)");
+        }
+
+    }
 }
