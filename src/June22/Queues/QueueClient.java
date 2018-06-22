@@ -15,6 +15,9 @@ public class QueueClient {
         queue.dequeue();
         queue.enqueue(60);
         queue.display();
+        System.out.println(queue.getSize());
+        System.out.println(queue.getFront());
+        System.out.println(queue.isEmpty());
 
     }
 
