@@ -1,4 +1,4 @@
-package June22;
+package June22.Stack;
 
 import June19.Stack.Stack;
 
