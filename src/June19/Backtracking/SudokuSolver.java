@@ -1,19 +1,27 @@
 package June19.Backtracking;
 
+import java.util.Scanner;
+
 public class SudokuSolver {
 
     public static void main(String[] defParams) {
 
+        Scanner scanner = new Scanner(System.in);
+
+        int size = scanner.nextInt();
+
         int[][] puzzle =
-                {{0, 0, 0, 2, 6, 0, 7, 0, 1},
-                        {6, 8, 0, 0, 7, 0, 0, 9, 0},
-                        {1, 9, 0, 0, 0, 4, 5, 0, 0},
-                        {8, 2, 0, 1, 0, 0, 0, 4, 0},
-                        {0, 0, 4, 6, 0, 2, 9, 0, 0},
-                        {0, 5, 0, 0, 0, 3, 0, 2, 8},
-                        {0, 0, 9, 3, 0, 0, 0, 7, 4},
-                        {0, 4, 0, 0, 5, 0, 0, 3, 6},
-                        {7, 0, 3, 0, 1, 8, 0, 0, 0}};
+                new int[size][size];
+
+        for (int row = 0; row < size; row++) {
+
+            for (int column = 0; column < size; column++) {
+
+                puzzle[row][column] = scanner.nextInt();
+
+            }
+
+        }
 
         if (solver(puzzle, 0, 0)) {
             displayPuzzle(puzzle);
@@ -53,7 +61,7 @@ public class SudokuSolver {
             return solver(puzzle, current_row, current_column + 1);
         }
 
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 1; i <= puzzle.length; i++) {
 
             //If it is safe to put this number here
             if (isItSafe(puzzle, current_row, current_column, i)) {
@@ -106,9 +114,22 @@ public class SudokuSolver {
 
     private static boolean isItSafeGrid(int[][] puzzle, int row, int column, int number) {
 
-        for (int loop_row = (3 * (row / 3)); loop_row < (3 * ((row / 3) + 1)); loop_row++) {
+        int rowCounter = 0;
+        int rowStopper = 0;
+        int columnCounter = 3 * (column / 3);
+        int columnStopper = 3 * ((column / 3) + 1);
 
-            for (int loop_column = (3 * (column / 3)); loop_column < (3 * ((column / 3) + 1)); loop_column++) {
+        if (puzzle.length == 9) {
+            rowCounter = 3 * (row / 3);
+            rowStopper = 3 * ((row / 3) + 1);
+        } else if (puzzle.length == 6) {
+            rowCounter = 2 * (row / 2);
+            rowStopper = 2 * ((row / 2) + 1);
+        }
+
+        for (int loop_row = rowCounter; loop_row < rowStopper; loop_row++) {
+
+            for (int loop_column = columnCounter; loop_column < columnStopper; loop_column++) {
 
                 if (puzzle[loop_row][loop_column] == number) return false;
             }
