@@ -20,7 +20,7 @@ public class DynamicStack extends Stack {
             int[] oldData = super.dataSource;
             int[] newData = new int[oldData.length * 2];
 
-            for (int i = 0; i < newData.length; i++) {
+            for (int i = 0; i < oldData.length; i++) {
                 newData[i] = oldData[i];
             }
 
