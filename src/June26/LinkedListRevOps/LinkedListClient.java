@@ -1,4 +1,4 @@
-package June26;
+package June26.LinkedListRevOps;
 
 import June24.LinkedList.LinkedList;
 

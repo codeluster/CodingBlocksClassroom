@@ -2,7 +2,7 @@ package June19.Stack;
 
 public class Stack {
 
-    private int[] dataSource;
+    protected int[] dataSource;
     private int top_of_stack = -1;
 
     // Creates a new stack with default size of 5
