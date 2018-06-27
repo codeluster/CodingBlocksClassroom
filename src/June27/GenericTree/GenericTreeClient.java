@@ -13,6 +13,7 @@ public class GenericTreeClient {
         System.out.println(genericTree.height());
         genericTree.mirror();
         genericTree.display();
+
     }
 
 }
