@@ -2,6 +2,7 @@ package June27.GenericTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class GenericTree {
@@ -174,26 +175,21 @@ public class GenericTree {
 //
 
     public int getMax() {
-        return getMax(this.root, this.root).data;
+        return getMax(this.root);
     }
 
-    private Node getMax(Node parent, Node globalMax) {
+    private int getMax(Node parent) {
 
-        Node localMax = globalMax;
-
-        if (parent.data > localMax.data) {
-            localMax = parent;
-        }
-
-        Node childMax = new Node();
+        int max = parent.data;
 
         for (Node child : parent.children) {
-            childMax = getMax(child, localMax);
+            int cm = getMax(child);
+            if (cm > max) {
+                max = cm;
+            }
         }
 
-        if (childMax.data > localMax.data) {
-            return childMax;
-        } else return localMax;
+        return max;
 
     }
 
@@ -223,9 +219,7 @@ public class GenericTree {
 
     private int height(Node parent) {
 
-        int height = 1;
-
-        int maxChildHeight = 0;
+        int maxChildHeight = -1;
 
         for (Node child : parent.children) {
             int x = height(child);
@@ -234,7 +228,7 @@ public class GenericTree {
             }
         }
 
-        return height + maxChildHeight;
+        return maxChildHeight + 1;
     }
 
     public void mirror() {
@@ -247,6 +241,123 @@ public class GenericTree {
 
         for (Node child : parent.children) {
             mirror(child);
+        }
+
+    }
+
+    public void printRightmost() {
+        Node superNode = new Node();
+        superNode.children.add(this.root);
+        printRightmost(superNode);
+    }
+
+    private void printRightmost(Node parent) {
+
+        if (parent.children.size() > 0) {
+            System.out.println(parent.children.get(parent.children.size() - 1).data + "");
+
+            for (Node child : parent.children) {
+                printRightmost(child);
+            }
+        }
+    }
+
+    // In pre-order traversal the parent gets printed before the child
+    public void preOrderTraversal() {
+        System.out.println("-------------");
+        preOrderTraversal(this.root);
+        System.out.println();
+        System.out.println("-------------");
+    }
+
+    private void preOrderTraversal(Node parent) {
+
+        System.out.print(parent.data + "\t");
+
+        for (Node child : parent.children) {
+            preOrderTraversal(child);
+        }
+
+    }
+
+    // In post-order traversal the children get printed before the parent
+    public void postOrderTraversal() {
+        System.out.println("-------------");
+        postOrderTraversal(this.root);
+        System.out.println();
+        System.out.println("-------------");
+    }
+
+    private void postOrderTraversal(Node parent) {
+
+        for (Node child : parent.children) {
+            postOrderTraversal(child);
+        }
+
+        System.out.print(parent.data + "\t");
+
+    }
+
+    public void printLevel(int level) {
+
+        for (Node node : getLevel(level)) {
+            System.out.print(node.data + "\t");
+        }
+
+    }
+
+    public void traverseByLevelRecursive() {
+        traverseByLevelRecursive(this.root);
+    }
+
+    private void traverseByLevelRecursive(Node parent) {
+        for (int i = 0; i < getSize(); i++) {
+            ArrayList<Node> arrayList = getLevel(i);
+            for (Node x : arrayList) {
+                System.out.print(x.data + "\t");
+            }
+        }
+    }
+
+    public void traverseByLevelIterative() {
+        traverseByLevelIterative(this.root);
+    }
+
+    private void traverseByLevelIterative(Node parent) {
+
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.addLast(parent);
+
+        while (!queue.isEmpty()) {
+
+            Node removedNode = queue.getFirst();
+
+            for (Node child : removedNode.children) {
+                queue.addFirst(child);
+            }
+
+            System.out.print(removedNode.data + "\t");
+
+        }
+    }
+
+    private ArrayList<Node> getLevel(int level) {
+        ArrayList<Node> result = new ArrayList<>();
+        Node superNode = new Node();
+        superNode.children.add(this.root);
+        getLevel(superNode, 0, level, result);
+        return result;
+    }
+
+    private void getLevel(Node parent, int currLevel, int targetLevel, ArrayList<Node> result) {
+
+        if (currLevel == targetLevel) {
+            result.addAll(parent.children);
+            return;
+        }
+
+        for (Node child : parent.children) {
+            getLevel(child, currLevel + 1, targetLevel, result);
         }
 
     }
