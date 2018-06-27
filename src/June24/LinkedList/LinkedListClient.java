@@ -9,16 +9,11 @@ public class LinkedListClient {
         linkedList.addFirst(6);
         linkedList.addItemAt(1, 9);
         linkedList.addLast(8);
+        linkedList.addLast(7);
+        linkedList.addLast(5);
         linkedList.display();
-        linkedList.removeFirst();
+       // linkedList.revPointerIteratively();
         linkedList.display();
-
-        linkedList.removeFirst();
-        linkedList.display();
-
-        System.out.println(linkedList.getSize());
-
-        linkedList.removeLast();
     }
 
 }
