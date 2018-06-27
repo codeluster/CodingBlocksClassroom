@@ -330,7 +330,7 @@ public class GenericTree {
 
         while (!queue.isEmpty()) {
 
-            Node removedNode = queue.getFirst();
+            Node removedNode = queue.removeFirst();
 
             for (Node child : removedNode.children) {
                 queue.addFirst(child);

@@ -16,7 +16,7 @@ public class GenericTreeClient {
 //        genericTree.mirror();
 //        genericTree.printRightmost();
 //        genericTree.preOrderTraversal();
-//        genericTree.traverseByLevelIterative();
+        genericTree.traverseByLevelIterative();
 
     }
 
