@@ -7,7 +7,7 @@ public class BinaryTree {
 
     private class Node {
         int data;
-        // Since a binary tree can only have upto two children instead of an array list of nodes
+        // Since a binary tree can only have max two children instead of an array list of nodes
         // like in a generic tree we can explicitly create two nodes for each child.
         Node leftChild;
         Node rightChild;
@@ -105,21 +105,133 @@ public class BinaryTree {
     }
 
     public int getHeight() {
-        return getHeight(this.root) - 1;
+        return getHeight(this.root);
     }
 
-    private int getHeight(Node parent) {
+    private int getHeight(Node node) {
+        return getHp1(node) - 1;
+    }
+
+    private int getHp1(Node parent) {
 
         if (parent == null) return 0;
 
         int height = 1;
 
-        int lHeight = getHeight(parent.leftChild);
-        int rHeight = getHeight(parent.rightChild);
+        int lHeight = getHp1(parent.leftChild);
+        int rHeight = getHp1(parent.rightChild);
 
         int maxChildHeight = Math.max(lHeight, rHeight);
 
         return height + maxChildHeight;
+
     }
 
+    public boolean contains(int item) {
+        return contains(this.root, item);
+    }
+
+    private boolean contains(Node parent, int item) {
+
+        if (parent == null) {
+            return false;
+        }
+
+        if (parent.data == item) {
+            return true;
+        }
+
+        return contains(parent.leftChild, item) || contains(parent.rightChild, item);
+
+    }
+
+    public void printIsNodeBalanced() {
+
+        printIsNodeBalanced(this.root);
+
+    }
+
+    private void printIsNodeBalanced(Node node) {
+
+        if (node == null) return;
+
+        System.out.println(node.data + "\t" + isNodeBalancedBool(node));
+
+        printIsNodeBalanced(node.leftChild);
+        printIsNodeBalanced(node.rightChild);
+
+    }
+
+    private boolean isNodeBalancedBool(Node node) {
+
+        int balancingFactor = isNodeBalancedInt(node);
+        return (balancingFactor == -1 || balancingFactor == 0 || balancingFactor == 1);
+
+    }
+
+    private int isNodeBalancedInt(Node parent) {
+
+        if (parent == null) return 0;
+
+        int lHeight = getHeight(parent.leftChild);
+        int rHeight = getHeight(parent.rightChild);
+
+        return lHeight - rHeight;
+
+    }
+
+//     Diameter is the largest distance between any two nodes in the tree.
+
+    public int diameterN2() {
+        return diameterN2(this.root);
+    }
+
+//     Complexity is N^2
+//     Considers three cases in which the max dia is found in left branch,
+//     max dia is in right branch or the max dia involves the parent node
+//     which is why +2 is added in sum of heights
+
+    private int diameterN2(Node parent) {
+
+        if (parent == null) return 0;
+
+        int leftDia = diameterN2(parent.leftChild);
+        int rightDia = diameterN2(parent.rightChild);
+
+        int selfInv = getHeight(parent.leftChild) + getHeight(parent.rightChild) + 2;
+
+        return Math.max(selfInv, Math.max(leftDia, rightDia));
+
+    }
+
+    public int diameterN() {
+        return diameterN(this.root).diameter;
+    }
+
+    private class Pair {
+        int diameter;
+        int height;
+    }
+
+    private Pair diameterN(Node parent) {
+
+        if (parent == null) {
+            Pair basePair = new Pair();
+            basePair.diameter = 0;
+            basePair.height = getHeight(parent);
+            return basePair;
+        }
+
+        Pair leftPair = diameterN(parent.leftChild);
+        Pair rightPair = diameterN(parent.rightChild);
+
+        Pair pair = new Pair();
+        pair.height = Math.max(leftPair.height, rightPair.height) + 1;
+
+        int selfPart = leftPair.height + rightPair.height + 2;
+        pair.diameter = Math.max(selfPart, Math.max(leftPair.diameter, rightPair.diameter));
+
+        return pair;
+
+    }
 }
