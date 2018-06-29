@@ -39,6 +39,43 @@ public class BinaryTree {
         this.root = getTree(null, false, scanner, false);
     }
 
+    public BinaryTree(int[] preOrder, int[] inOrder) {
+
+        this.root = construct(0, preOrder.length - 1, 0, inOrder.length - 1, preOrder, inOrder);
+
+    }
+
+    private Node construct(int pLow, int pHigh, int iLow, int iHigh, int[] pOrd, int[] iOrd) {
+
+        if (pLow > pHigh) return null;
+
+        Node node = new Node();
+
+        int p0 = pOrd[pLow];
+
+        node.data = p0;
+
+        int index = -1;
+
+        for (int i = iLow; i <= iHigh; i++) {
+
+            if (iOrd[i] == p0) {
+
+                index = i;
+                break;
+
+            }
+
+        }
+
+        int consec = index - iLow;
+
+        node.leftChild = construct(pLow + 1, pLow + consec, iLow, iLow + index - 1, pOrd, iOrd);
+        node.rightChild = construct(pLow + consec + 1, pHigh, index + 1, iHigh, pOrd, iOrd);
+
+        return node;
+    }
+
     // @Param isLeft triggers the option to add a second child
     private Node getTree(Node parent, Boolean isLeft, Scanner scanner, boolean interactive) {
 
@@ -169,40 +206,40 @@ public class BinaryTree {
 
     }
 
-    public void printIsNodeBalanced() {
-
-        printIsNodeBalanced(this.root);
-
-    }
-
-    private void printIsNodeBalanced(Node node) {
-
-        if (node == null) return;
-
-        System.out.println(node.data + "\t" + isNodeBalancedBool(node));
-
-        printIsNodeBalanced(node.leftChild);
-        printIsNodeBalanced(node.rightChild);
-
-    }
-
-    private boolean isNodeBalancedBool(Node node) {
-
-        int balancingFactor = isNodeBalancedInt(node);
-        return (balancingFactor == -1 || balancingFactor == 0 || balancingFactor == 1);
-
-    }
-
-    private int isNodeBalancedInt(Node parent) {
-
-        if (parent == null) return 0;
-
-        int lHeight = getHeight(parent.leftChild);
-        int rHeight = getHeight(parent.rightChild);
-
-        return lHeight - rHeight;
-
-    }
+//    public void printIsNodeBalanced() {
+//
+//        printIsNodeBalanced(this.root);
+//
+//    }
+//
+//    private void printIsNodeBalanced(Node node) {
+//
+//        if (node == null) return;
+//
+//        System.out.println(node.data + "\t" + isNodeBalancedBool(node));
+//
+//        printIsNodeBalanced(node.leftChild);
+//        printIsNodeBalanced(node.rightChild);
+//
+//    }
+//
+//    private boolean isNodeBalancedBool(Node node) {
+//
+//        int balancingFactor = isNodeBalancedInt(node);
+//        return (balancingFactor == -1 || balancingFactor == 0 || balancingFactor == 1);
+//
+//    }
+//
+//    private int isNodeBalancedInt(Node parent) {
+//
+//        if (parent == null) return 0;
+//
+//        int lHeight = getHeight(parent.leftChild);
+//        int rHeight = getHeight(parent.rightChild);
+//
+//        return lHeight - rHeight;
+//
+//    }
 
 //     Diameter is the largest distance between any two nodes in the tree.
 
@@ -258,4 +295,38 @@ public class BinaryTree {
         return pair;
 
     }
+
+    private class BalPair {
+        boolean isBalanced;
+        int height;
+    }
+
+    public boolean balanced() {
+        return this.balanced(this.root).isBalanced;
+    }
+
+    private BalPair balanced(Node parent) {
+
+        if (parent == null) {
+            BalPair pair = new BalPair();
+            pair.height = -1;
+            pair.isBalanced = true;
+            return pair;
+        }
+
+        BalPair left = balanced(parent.leftChild);
+        BalPair right = balanced(parent.rightChild);
+
+        BalPair pair = new BalPair();
+        pair.height = Math.max(left.height, right.height) + 1;
+
+        int bal = left.height - right.height;
+
+        if (left.isBalanced && right.isBalanced && bal > -2 && bal < 2) {
+            pair.isBalanced = true;
+        } else pair.isBalanced = false;
+
+        return pair;
+    }
+
 }
