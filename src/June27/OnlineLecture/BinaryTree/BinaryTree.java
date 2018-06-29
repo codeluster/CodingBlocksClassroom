@@ -1,5 +1,6 @@
 package June27.OnlineLecture.BinaryTree;
 
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.Scanner;
 
 // A binary tree can have 0, 1 or 2 children.
@@ -327,6 +328,52 @@ public class BinaryTree {
         } else pair.isBalanced = false;
 
         return pair;
+    }
+
+    private class BSTPair {
+
+        Node largestBSTRoot = null;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int size = 0;
+        boolean isBST = true;
+
+    }
+
+    public void largestBST() {
+        BSTPair bstPair = largestBST(this.root);
+        System.out.println(bstPair.largestBSTRoot.data);
+        System.out.println(bstPair.size);
+    }
+
+    private BSTPair largestBST(Node parent) {
+
+        if (parent == null) return new BSTPair();
+
+        BSTPair bstPair = new BSTPair();
+
+        BSTPair left = largestBST(parent.leftChild);
+        BSTPair right = largestBST(parent.rightChild);
+
+        if (left.isBST && right.isBST && parent.data > left.max && parent.data < right.min) {
+
+            bstPair.isBST = true;
+            bstPair.max = Math.max(parent.data, Math.max(left.max, right.max));
+            bstPair.min = Math.min(parent.data, Math.min(left.min, right.min));
+            bstPair.largestBSTRoot = parent;
+            bstPair.size = left.size + right.size + 1;
+        } else {
+            if (left.size >= right.size) {
+                bstPair = left;
+                bstPair.isBST = false;
+            } else {
+                bstPair = right;
+                bstPair.isBST = false;
+            }
+        }
+
+        return bstPair;
+
     }
 
 }
