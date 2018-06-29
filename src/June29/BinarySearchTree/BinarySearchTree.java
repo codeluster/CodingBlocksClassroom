@@ -184,7 +184,9 @@ public class BinarySearchTree {
     }
 
     public void printRange(int from, int to) {
+        System.out.println();
         printRange(this.root, from, to);
+        System.out.println();
     }
 
     private void printRange(Node parent, int from, int to) {
@@ -198,10 +200,32 @@ public class BinarySearchTree {
         } else if (x > to) {
             printRange(parent.left, from, to);
         } else {
-            System.out.print(x + "\t");
             printRange(parent.right, from, to);
+            System.out.print(x + "\t");
             printRange(parent.left, from, to);
         }
+
+    }
+
+    private class Mover {
+        int sum = 0;
+    }
+
+    public void replaceWithSumOfLarger() {
+        replaceWithSumOfLarger(this.root, new Mover());
+    }
+
+    private void replaceWithSumOfLarger(Node parent, Mover mover) {
+
+        if (parent == null) return;
+
+        replaceWithSumOfLarger(parent.right, mover);
+
+        int temp = parent.data;
+        parent.data = mover.sum;
+        mover.sum += temp;
+
+        replaceWithSumOfLarger(parent.left, mover);
 
     }
 
