@@ -127,6 +127,30 @@ public class BinaryTree {
 
     }
 
+    public int getMax() {
+        return getMax(this.root);
+    }
+
+    private int getMax(Node parent) {
+
+        if (parent == null) {
+            return Integer.MIN_VALUE;
+        }
+        return Math.max(parent.data, Math.max(getMax(parent.leftChild), getMax(parent.rightChild)));
+    }
+
+    public int getMin() {
+        return getMin(this.root);
+    }
+
+    private int getMin(Node parent) {
+
+        if (parent == null) {
+            return Integer.MAX_VALUE;
+        }
+        return Math.min(parent.data, Math.min(getMin(parent.leftChild), getMin(parent.rightChild)));
+    }
+
     public boolean contains(int item) {
         return contains(this.root, item);
     }

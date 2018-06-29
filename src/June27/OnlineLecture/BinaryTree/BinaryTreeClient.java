@@ -15,6 +15,8 @@ public class BinaryTreeClient {
         System.out.println(binaryTree.contains(26));
         System.out.println(binaryTree.diameterN2());
         System.out.println(binaryTree.diameterN());
+        System.out.println(binaryTree.getMax());
+        System.out.println(binaryTree.getMin());
     }
 
 }
