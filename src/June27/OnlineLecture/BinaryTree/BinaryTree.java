@@ -362,9 +362,12 @@ public class BinaryTree {
             bstPair.min = Math.min(parent.data, Math.min(left.min, right.min));
             bstPair.largestBSTRoot = parent;
             bstPair.size = left.size + right.size + 1;
+
         } else {
             if (left.size >= right.size) {
                 bstPair = left;
+                bstPair.isBST = false;
+                bstPair.isBST = false;
                 bstPair.isBST = false;
             } else {
                 bstPair = right;
