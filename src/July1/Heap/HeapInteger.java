@@ -16,6 +16,8 @@ public class HeapInteger {
 
     public void insert(int item) {
 
+        if (this.data.contains(item)) return;
+
         this.data.add(item);
         upheapify(this.data.size() - 1);
 
