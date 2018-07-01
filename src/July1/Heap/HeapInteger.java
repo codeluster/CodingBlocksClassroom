@@ -2,9 +2,9 @@ package July1.Heap;
 
 import java.util.ArrayList;
 
-public class Heap<T extends Comparable<T>> {
+public class HeapInteger {
 
-    private ArrayList<T> data = new ArrayList<>();
+    private ArrayList<Integer> data = new ArrayList<>();
 
     public int getSize() {
         return this.data.size();
@@ -14,7 +14,7 @@ public class Heap<T extends Comparable<T>> {
         System.out.println(this.data);
     }
 
-    public void insert(T item) {
+    public void insert(int item) {
 
         this.data.add(item);
         upheapify(this.data.size() - 1);
@@ -23,12 +23,12 @@ public class Heap<T extends Comparable<T>> {
 
     private void upheapify(int childIndex) {
 
-        T childData = this.data.get(childIndex);
+        int childData = this.data.get(childIndex);
         int parentIndex = (childIndex - 1) / 2;
-        T parenData = this.data.get(parentIndex);
+        int parentData = this.data.get(parentIndex);
 
         // At base case child's data == parent's data hence recursion terminates
-        if (isLarger(parenData, childData)) {
+        if (childData < parentData) {
             swap(parentIndex, childIndex);
             upheapify(parentIndex);
         }
@@ -37,17 +37,17 @@ public class Heap<T extends Comparable<T>> {
 
     private void swap(int index1, int index2) {
 
-        T data1 = this.data.get(index1);
-        T data2 = this.data.get(index2);
+        int data1 = this.data.get(index1);
+        int data2 = this.data.get(index2);
 
         this.data.set(index1, data2);
         this.data.set(index2, data1);
 
     }
 
-    public T remove() {
+    public int remove() {
 
-        T returnValue = this.data.get(0);
+        int returnValue = this.data.get(0);
         swap(0, this.data.size() - 1);
         this.data.remove(this.data.size() - 1);
         downheapify(0);
@@ -61,10 +61,10 @@ public class Heap<T extends Comparable<T>> {
 
         int minIndex = parentIndex;
 
-        if ((!(leftChIndex >= this.data.size())) && isLarger(this.data.get(minIndex), this.data.get(leftChIndex))) {
+        if (!(leftChIndex >= this.data.size()) && this.data.get(leftChIndex) < this.data.get(minIndex)) {
             minIndex = leftChIndex;
         }
-        if ((!(rightChIndex >= this.data.size())) && isLarger(this.data.get(minIndex), this.data.get(rightChIndex))) {
+        if ((!(rightChIndex >= this.data.size())) && this.data.get(rightChIndex) < this.data.get(minIndex)) {
             minIndex = rightChIndex;
         }
 
@@ -75,12 +75,8 @@ public class Heap<T extends Comparable<T>> {
 
     }
 
-    public T getMin() {
+    public int getMin() {
         return this.data.get(0);
-    }
-
-    private boolean isLarger(T obj1, T obj2) {
-        return obj1.compareTo(obj2) > 0;
     }
 
 }
