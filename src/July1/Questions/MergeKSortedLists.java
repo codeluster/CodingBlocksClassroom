@@ -57,7 +57,6 @@ public class MergeKSortedLists {
         for (int i = 0; i < mList.size(); i++) {
             Pair pair = new Pair();
             pair.data = mList.get(i).get(0);
-            //System.out.println(pair.data);
             pair.elementIndex = 0;
             pair.listNum = i;
             heap.insert(pair);
@@ -66,7 +65,6 @@ public class MergeKSortedLists {
         while (heap.getSize() != 0) {
 
             Pair pair = heap.remove();
-           // System.out.println(pair.data);
             result.add(pair.data);
 
             pair.elementIndex++;
