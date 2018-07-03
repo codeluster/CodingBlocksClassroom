@@ -59,7 +59,7 @@ public class MazePath {
 
         Arrays.fill(storage, 1);
 
-        int temp = 1;
+        int diagonal = 1;
 
         for (int row = er - 1; row >= cr; row--) {
 
@@ -67,11 +67,11 @@ public class MazePath {
 
                 if (col == ec) {
                     storage[col] = 1;
-                    temp = 1;
+                    diagonal = 1;
                 } else {
-                    int temp2 = storage[col];
-                    storage[col] = temp + temp2 + storage[col + 1];
-                    temp = temp2;
+                    int newDiagonal = storage[col];
+                    storage[col] = diagonal + newDiagonal + storage[col + 1];
+                    diagonal = newDiagonal;
                 }
 
             }
