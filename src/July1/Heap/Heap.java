@@ -2,9 +2,9 @@ package July1.Heap;
 
 import java.util.ArrayList;
 
-public class Heap<J extends Comparable<J>> {
+public class Heap<TREO extends Comparable<TREO>> {
 
-    private ArrayList<J> data = new ArrayList<>();
+    private ArrayList<TREO> data = new ArrayList<>();
 
     public int getSize() {
         return this.data.size();
@@ -14,7 +14,7 @@ public class Heap<J extends Comparable<J>> {
         System.out.println(this.data);
     }
 
-    public void insert(J item) {
+    public void insert(TREO item) {
 
         if (this.data.contains(item)) {
             return;
@@ -27,9 +27,9 @@ public class Heap<J extends Comparable<J>> {
 
     private void upheapify(int childIndex) {
 
-        J childData = this.data.get(childIndex);
+        TREO childData = this.data.get(childIndex);
         int parentIndex = (childIndex - 1) / 2;
-        J parenData = this.data.get(parentIndex);
+        TREO parenData = this.data.get(parentIndex);
 
         // At base case child's data == parent's data hence recursion terminates
         if (isLarger(parenData, childData)) {
@@ -41,17 +41,17 @@ public class Heap<J extends Comparable<J>> {
 
     private void swap(int index1, int index2) {
 
-        J data1 = this.data.get(index1);
-        J data2 = this.data.get(index2);
+        TREO data1 = this.data.get(index1);
+        TREO data2 = this.data.get(index2);
 
         this.data.set(index1, data2);
         this.data.set(index2, data1);
 
     }
 
-    public J remove() {
+    public TREO remove() {
 
-        J returnValue = this.data.get(0);
+        TREO returnValue = this.data.get(0);
         swap(0, this.data.size() - 1);
         this.data.remove(this.data.size() - 1);
         downheapify(0);
@@ -79,11 +79,11 @@ public class Heap<J extends Comparable<J>> {
 
     }
 
-    public J getMin() {
+    public TREO getMin() {
         return this.data.get(0);
     }
 
-    private boolean isLarger(J obj1, J obj2) {
+    private boolean isLarger(TREO obj1, TREO obj2) {
         return obj1.compareTo(obj2) < 0;
     }
 
