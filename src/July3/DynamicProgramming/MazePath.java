@@ -7,7 +7,7 @@ public class MazePath {
     public static void main(String[] args) {
 
 //        System.out.println(TopDown(0, 0, 2, 2, new int[3][3]));
-        System.out.println(BottomUpSpaceEffWithDiagonal(0, 0, 2, 2));
+        System.out.println(BottomUpSpaceEffWithDiagonal(0, 0, 3, 3));
     }
 
     private static int BottomUp(int cr, int cc, int er, int ec) {
@@ -67,6 +67,7 @@ public class MazePath {
 
                 if (col == ec) {
                     storage[col] = 1;
+                    temp = 1;
                 } else {
                     int temp2 = storage[col];
                     storage[col] = temp + temp2 + storage[col + 1];
