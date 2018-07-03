@@ -1,6 +1,6 @@
 package June17.Recursion_Print;
 
-public class PermutationWithPrintApproach {
+public class Permutation {
 
     public static void main(String[] s) {
 

@@ -1,6 +1,6 @@
 package June17.Recursion_Print;
 
-public class MazePathWithPrintApproach {
+public class MazePath {
 
     public static void main(String[] args) {
 

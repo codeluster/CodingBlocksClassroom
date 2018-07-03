@@ -2,7 +2,7 @@ package June17.Recursion_Print;
 
 import java.util.ArrayList;
 
-public class KPCwithPrintApproach {
+public class KPC {
 
     public static void main(String[] args) {
 

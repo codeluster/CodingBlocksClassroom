@@ -2,7 +2,7 @@ package June17.Recursion_Print;
 
 // Since the previous approach consumes a lot of memory this question reduces the problem instad of building on the answer
 
-public class SubsequencesWithPrintApproach {
+public class Subsequences {
 
     public static void main(String[] sfji) {
 

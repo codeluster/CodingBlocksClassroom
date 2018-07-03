@@ -1,6 +1,6 @@
 package June17.Recursion_Print;
 
-public class BoardPathWithPrintApproach {
+public class BoardPath {
 
     public static void main(String[] strings) {
 

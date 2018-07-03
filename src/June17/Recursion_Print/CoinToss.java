@@ -1,6 +1,6 @@
 package June17.Recursion_Print;
 
-public class CoinTossWithPrintApproach {
+public class CoinToss {
 
     public static void main(String[] s) {
 

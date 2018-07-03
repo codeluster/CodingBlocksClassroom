@@ -1,23 +1,105 @@
 package July3.DynamicProgramming;
 
+import java.util.Arrays;
+
 public class MazePath {
 
     public static void main(String[] args) {
 
+//        System.out.println(TopDown(0, 0, 2, 2, new int[3][3]));
+        System.out.println(BottomUpSpaceEffWithDiagonal(0, 0, 2, 2));
     }
 
-    private static int getPath(int cr, int cc, int er, int ec, String ans) {
+    private static int BottomUp(int cr, int cc, int er, int ec) {
+
+        int[][] storage = new int[er + 1][ec + 1];
+
+        //Create a new array with edges containing 1
+        for (int row = er; row >= cr; row--) {
+            for (int column = ec; column >= cc; column--) {
+                if (row == er || column == ec) {
+                    storage[row][column] = 1;
+                } else {
+                    storage[row][column] = storage[row][column + 1] + storage[row + 1][column];
+                }
+            }
+        }
+
+        return storage[0][0];
+
+    }
+
+    private static int BottomUpSpaceEff(int cr, int cc, int er, int ec) {
+
+        int[] storage = new int[ec + 1];
+
+        Arrays.fill(storage, 1);
+
+        for (int row = er - 1; row >= cr; row--) {
+
+            for (int col = ec; col >= cc; col--) {
+
+                if (col == ec) {
+                    storage[col] = 1;
+                } else {
+                    storage[col] += storage[col + 1];
+                }
+
+            }
+
+        }
+
+        return storage[0];
+
+    }
+
+    private static int BottomUpSpaceEffWithDiagonal(int cr, int cc, int er, int ec) {
+
+        int[] storage = new int[ec + 1];
+
+        Arrays.fill(storage, 1);
+
+        int temp = 1;
+
+        for (int row = er - 1; row >= cr; row--) {
+
+            for (int col = ec; col >= cc; col--) {
+
+                if (col == ec) {
+                    storage[col] = 1;
+                } else {
+                    int temp2 = storage[col];
+                    storage[col] = temp + temp2 + storage[col + 1];
+                    temp = temp2;
+                }
+
+            }
+
+        }
+
+        return storage[0];
+
+    }
+
+    private static int TopDown(int cr, int cc, int er, int ec, int[][] storage) {
 
         if (cr == er && cc == ec) {
-            System.out.println(ans);
             return 1;
         } else if (cr > er || cc > ec) {
             return 0;
-        } else {
-            int hc = getPath(cr, cc + 1, er, ec, "V" + ans);
-            int vc = getPath(cr + 1, cc, er, ec, "H" + ans);
-            return hc + vc;
         }
 
+        if (storage[cr][cc] != 0) {
+            return storage[cr][cc];
+        }
+
+        int hc = TopDown(cr, cc + 1, er, ec, storage);
+        int vc = TopDown(cr + 1, cc, er, ec, storage);
+
+        storage[cr][cc] = hc + vc;
+
+        return storage[cr][cc];
+
     }
+
 }
