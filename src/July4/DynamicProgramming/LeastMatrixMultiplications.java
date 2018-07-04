@@ -4,14 +4,24 @@ public class LeastMatrixMultiplications {
 
     public static void main(String[] args) {
 
-        int[] input = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int n = 100;
+
+        int[] input = new int[n];
+
+        for (int i = 1; i <= n; i++) {
+            input[i - 1] = i;
+        }
 
         long start = System.currentTimeMillis();
 
-        System.out.println(Recursion(0, input.length - 1, input));
-        System.out.println(TopDown(0, input.length - 1, input, new int[input.length][input.length]));
-        System.out.println(BottomUp(input));
+//        System.out.println(Recursion(0, input.length - 1, input));
+//        System.out.println(System.currentTimeMillis() - start);
 
+        System.out.println(TopDown(0, input.length - 1, input, new int[input.length][input.length]));
+        System.out.println(System.currentTimeMillis() - start);
+        start = System.currentTimeMillis();
+
+        System.out.println(BottomUp(input));
         System.out.println(System.currentTimeMillis() - start);
     }
 
