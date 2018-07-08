@@ -1,5 +1,6 @@
 package July8.Graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -76,8 +77,7 @@ public class Graph {
     }
 
     public boolean hasPath(String origin, String destination) {
-//        return hasPath(origin, destination, new HashMap<>());
-        return BreadthFirstSearch(origin, destination, new HashMap<>());
+        return hasPath(origin, destination, new HashMap<>());
     }
 
     private boolean hasPath(String origin, String destination, HashMap<String, Boolean> processed) {
@@ -103,6 +103,12 @@ public class Graph {
         Vertex vertex;
     }
 
+    public boolean BreadthFirstSearch(String origin, String destination) {
+        return BreadthFirstSearch(origin, destination, new HashMap<>());
+    }
+
+    // Breadth First Search first searches in the nodes at a particular level before searching the child level
+    // Therefore useful to find the shortest path
     private boolean BreadthFirstSearch(String origin, String destination, HashMap<String, Boolean> processed) {
         LinkedList<Pair> queue = new LinkedList<>();
 
@@ -129,7 +135,7 @@ public class Graph {
             Pair newPair = new Pair();
 
             for (String neighbour : removedPair.vertex.neighbours.keySet()) {
-                if(!processed.containsKey(neighbour)) {
+                if (!processed.containsKey(neighbour)) {
                     newPair.vertex_name = neighbour;
                     newPair.path_so_far = removedPair.path_so_far + neighbour;
                     newPair.vertex = this.graph.get(neighbour);
@@ -141,6 +147,303 @@ public class Graph {
 
         return false;
 
+    }
+
+    public boolean DepthFirstSearch(String origin, String destination) {
+        return DepthFirstSearch(origin, destination, new HashMap<>());
+    }
+
+    // In Depth First Search one node is picked and is traversed completely before sibling node
+    // Can return a path of any length
+    private boolean DepthFirstSearch(String origin, String destination, HashMap<String, Boolean> processed) {
+        LinkedList<Pair> stack = new LinkedList<>();
+
+        Pair pair = new Pair();
+        pair.vertex_name = origin;
+        pair.path_so_far = origin;
+        pair.vertex = this.graph.get(origin);
+
+        stack.addFirst(pair);
+
+        while (!stack.isEmpty()) {
+
+            Pair removedPair = stack.removeFirst();
+
+            if (processed.containsKey(removedPair.vertex_name)) continue;
+
+            if (removedPair.vertex_name.equals(destination) || removedPair.vertex.neighbours.containsKey(destination)) {
+                System.out.println(removedPair.path_so_far + destination);
+                return true;
+            }
+
+            processed.put(removedPair.vertex_name, true);
+
+            Pair newPair = new Pair();
+
+            for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+                if (!processed.containsKey(neighbour)) {
+                    newPair.vertex_name = neighbour;
+                    newPair.path_so_far = removedPair.path_so_far + neighbour;
+                    newPair.vertex = this.graph.get(neighbour);
+                    stack.addFirst(newPair);
+                }
+            }
+
+        }
+
+        return false;
+
+    }
+
+    public void BinaryFirstTraversal() {
+
+        LinkedList<Pair> queue = new LinkedList<>();
+        HashMap<String, Boolean> processed = new HashMap<>();
+
+        for (String key : this.graph.keySet()) {
+
+            // If passed this condition second time there are disjoint components in the forest!
+            if (processed.containsKey(key)) continue;
+
+            Pair pair = new Pair();
+            pair.vertex_name = key;
+            pair.path_so_far = key;
+            pair.vertex = this.graph.get(key);
+
+            queue.addLast(pair);
+
+            while (!queue.isEmpty()) {
+
+                Pair removedPair = queue.removeFirst();
+
+                if (processed.containsKey(removedPair.vertex_name)) {
+                    continue;
+                } else {
+                    processed.put(removedPair.vertex_name, true);
+                }
+
+                System.out.println(removedPair.vertex_name + " via " + removedPair.path_so_far);
+
+
+                for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+
+                    // Put all children in the queue
+                    if (!processed.containsKey(neighbour)) {
+                        Pair newPair = new Pair();
+                        newPair.vertex_name = neighbour;
+                        newPair.path_so_far = removedPair.path_so_far + neighbour;
+                        newPair.vertex = this.graph.get(neighbour);
+                        queue.addLast(newPair);
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    public void DepthFirstTraversal() {
+
+        LinkedList<Pair> stack = new LinkedList<>();
+        HashMap<String, Boolean> processed = new HashMap<>();
+
+        for (String key : this.graph.keySet()) {
+
+            // If passed this condition second time there are disjoint components in the forest!
+            if (processed.containsKey(key)) continue;
+
+            Pair pair = new Pair();
+            pair.vertex_name = key;
+            pair.path_so_far = key;
+            pair.vertex = this.graph.get(key);
+
+            stack.addFirst(pair);
+
+            while (!stack.isEmpty()) {
+
+                Pair removedPair = stack.removeFirst();
+
+                if (processed.containsKey(removedPair.vertex_name)) {
+                    continue;
+                } else {
+                    processed.put(removedPair.vertex_name, true);
+                }
+
+                System.out.println(removedPair.vertex_name + " via " + removedPair.path_so_far);
+
+
+                for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+
+                    // Put all children in the queue
+                    if (!processed.containsKey(neighbour)) {
+                        Pair newPair = new Pair();
+                        newPair.vertex_name = neighbour;
+                        newPair.path_so_far = removedPair.path_so_far + neighbour;
+                        newPair.vertex = this.graph.get(neighbour);
+                        stack.addFirst(newPair);
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    public boolean isConnected() {
+
+        LinkedList<Pair> queue = new LinkedList<>();
+        HashMap<String, Boolean> processed = new HashMap<>();
+
+        int counter = 1;
+
+        for (String key : this.graph.keySet()) {
+
+            // If passed this condition second time there are disjoint components in the forest!
+            if (processed.containsKey(key)) continue;
+            counter--;
+
+            Pair pair = new Pair();
+            pair.vertex_name = key;
+            pair.path_so_far = key;
+            pair.vertex = this.graph.get(key);
+
+            queue.addLast(pair);
+
+            while (!queue.isEmpty()) {
+
+                Pair removedPair = queue.removeFirst();
+
+                if (processed.containsKey(removedPair.vertex_name)) {
+                    continue;
+                } else {
+                    processed.put(removedPair.vertex_name, true);
+                }
+
+                for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+
+                    // Put all children in the queue
+                    if (!processed.containsKey(neighbour)) {
+                        Pair newPair = new Pair();
+                        newPair.vertex_name = neighbour;
+                        newPair.path_so_far = removedPair.path_so_far + neighbour;
+                        newPair.vertex = this.graph.get(neighbour);
+                        queue.addLast(newPair);
+                    }
+
+                }
+
+            }
+        }
+
+        return counter >= 0;
+    }
+
+    public boolean isCyclic() {
+
+        LinkedList<Pair> queue = new LinkedList<>();
+        HashMap<String, Boolean> processed = new HashMap<>();
+
+        int flag = 0;
+
+        for (String key : this.graph.keySet()) {
+
+            // If passed this condition second time there are disjoint components in the forest!
+            if (processed.containsKey(key)) continue;
+
+            Pair pair = new Pair();
+            pair.vertex_name = key;
+            pair.path_so_far = key;
+            pair.vertex = this.graph.get(key);
+
+            queue.addLast(pair);
+
+            while (!queue.isEmpty()) {
+
+                Pair removedPair = queue.removeFirst();
+
+                if (processed.containsKey(removedPair.vertex_name)) {
+                    flag++;
+                    continue;
+                } else {
+                    processed.put(removedPair.vertex_name, true);
+                }
+
+
+                for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+
+                    // Put all children in the queue
+                    if (!processed.containsKey(neighbour)) {
+                        Pair newPair = new Pair();
+                        newPair.vertex_name = neighbour;
+                        newPair.path_so_far = removedPair.path_so_far + neighbour;
+                        newPair.vertex = this.graph.get(neighbour);
+                        queue.addLast(newPair);
+                    }
+
+                }
+
+            }
+        }
+        return flag >= 1;
+    }
+
+    public ArrayList<ArrayList<String>> getCyclicComponents() {
+
+        ArrayList<ArrayList<String>> mList = new ArrayList<>();
+
+        LinkedList<Pair> queue = new LinkedList<>();
+        HashMap<String, Boolean> processed = new HashMap<>();
+
+        for (String key : this.graph.keySet()) {
+
+            // If passed this condition second time there are disjoint components in the forest!
+            if (processed.containsKey(key)) continue;
+            ArrayList<String> arrayList = new ArrayList<>();
+
+            Pair pair = new Pair();
+            pair.vertex_name = key;
+            pair.path_so_far = key;
+            pair.vertex = this.graph.get(key);
+
+            queue.addLast(pair);
+
+            while (!queue.isEmpty()) {
+
+                Pair removedPair = queue.removeFirst();
+
+                if (processed.containsKey(removedPair.vertex_name)) {
+                    continue;
+                } else {
+                    arrayList.add(removedPair.vertex_name);
+                    processed.put(removedPair.vertex_name, true);
+                }
+
+                for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+
+                    // Put all children in the queue
+                    if (!processed.containsKey(neighbour)) {
+                        Pair newPair = new Pair();
+                        newPair.vertex_name = neighbour;
+                        newPair.path_so_far = removedPair.path_so_far + neighbour;
+                        newPair.vertex = this.graph.get(neighbour);
+                        queue.addLast(newPair);
+                    }
+
+                }
+
+            }
+
+            mList.add(arrayList);
+
+        }
+
+        return mList;
+    }
+
+    public boolean isTree() {
+        return this.isConnected() && !this.isCyclic();
     }
 
 }
