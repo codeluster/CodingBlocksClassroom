@@ -33,8 +33,8 @@ public class Palindromes {
 
         for (int i = si; i < ei; i++) {
 
-            int fp = TopDown(str, si,  i, strg);
-            int bp = TopDown(str, i+1, ei, strg);
+            int fp = TopDown(str, si, i, strg);
+            int bp = TopDown(str, i + 1, ei, strg);
 
             int d3 = fp + bp + 1;
 
