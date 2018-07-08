@@ -21,7 +21,7 @@ public class GraphClient {
         graph.addEdge("E", "F", 70);
         graph.addEdge("F", "G", 10);
 
-        graph.removeVertex("D");
+//        graph.removeVertex("D");
 
         System.out.println(graph.hasPath("A", "F"));
 

@@ -1,6 +1,7 @@
 package July8.Graph;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Graph {
 
@@ -22,12 +23,12 @@ public class Graph {
         graph.put(item, new Vertex());
     }
 
-    public void removeVertex(String vtx) {
-        if (!this.containsVertex(vtx)) return;
-        for (String neighbour : graph.get(vtx).neighbours.keySet()) {
-            graph.get(neighbour).neighbours.remove(vtx);
+    public void removeVertex(String vertex) {
+        if (!this.containsVertex(vertex)) return;
+        for (String neighbour : graph.get(vertex).neighbours.keySet()) {
+            graph.get(neighbour).neighbours.remove(vertex);
         }
-        graph.remove(vtx);
+        graph.remove(vertex);
     }
 
     public int numEdges() {
@@ -41,24 +42,24 @@ public class Graph {
         return sum / 2;
     }
 
-    public boolean containsEdge(String vtx1, String vtx2) {
-        return graph.containsKey(vtx1) && graph.containsKey(vtx2) && graph.get(vtx1).neighbours.containsKey(vtx2);
+    public boolean containsEdge(String vertex1, String vertex2) {
+        return graph.containsKey(vertex1) && graph.containsKey(vertex2) && graph.get(vertex1).neighbours.containsKey(vertex2);
     }
 
-    public void addEdge(String vtx1, String vtx2, int cost) {
-        if (this.containsEdge(vtx1, vtx2)) return;
+    public void addEdge(String vertex1, String vertex2, int cost) {
+        if (this.containsEdge(vertex1, vertex2)) return;
 
-        graph.get(vtx1).neighbours.put(vtx2, cost);
-        graph.get(vtx2).neighbours.put(vtx1, cost);
+        graph.get(vertex1).neighbours.put(vertex2, cost);
+        graph.get(vertex2).neighbours.put(vertex1, cost);
 
     }
 
-    public void removeEdge(String vtx1, String vtx2) {
+    public void removeEdge(String vertex1, String vertex2) {
 
-        if (!this.containsEdge(vtx1, vtx2)) return;
+        if (!this.containsEdge(vertex1, vertex2)) return;
 
-        graph.get(vtx1).neighbours.remove(vtx2);
-        graph.get(vtx2).neighbours.remove(vtx1);
+        graph.get(vertex1).neighbours.remove(vertex2);
+        graph.get(vertex2).neighbours.remove(vertex1);
     }
 
     public void display() {
@@ -75,7 +76,8 @@ public class Graph {
     }
 
     public boolean hasPath(String origin, String destination) {
-        return hasPath(origin, destination, new HashMap<>());
+//        return hasPath(origin, destination, new HashMap<>());
+        return BreadthFirstSearch(origin, destination, new HashMap<>());
     }
 
     private boolean hasPath(String origin, String destination, HashMap<String, Boolean> processed) {
@@ -93,6 +95,52 @@ public class Graph {
         }
 
         return false;
+    }
+
+    private class Pair {
+        String vertex_name;
+        String path_so_far;
+        Vertex vertex;
+    }
+
+    private boolean BreadthFirstSearch(String origin, String destination, HashMap<String, Boolean> processed) {
+        LinkedList<Pair> queue = new LinkedList<>();
+
+        Pair pair = new Pair();
+        pair.vertex_name = origin;
+        pair.path_so_far = origin;
+        pair.vertex = this.graph.get(origin);
+
+        queue.addLast(pair);
+
+        while (!queue.isEmpty()) {
+
+            Pair removedPair = queue.removeFirst();
+
+            if (processed.containsKey(removedPair.vertex_name)) continue;
+
+            if (removedPair.vertex_name.equals(destination) || removedPair.vertex.neighbours.containsKey(destination)) {
+                System.out.println(removedPair.path_so_far + destination);
+                return true;
+            }
+
+            processed.put(removedPair.vertex_name, true);
+
+            Pair newPair = new Pair();
+
+            for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+                if(!processed.containsKey(neighbour)) {
+                    newPair.vertex_name = neighbour;
+                    newPair.path_so_far = removedPair.path_so_far + neighbour;
+                    newPair.vertex = this.graph.get(neighbour);
+                    queue.addLast(newPair);
+                }
+            }
+
+        }
+
+        return false;
+
     }
 
 }
