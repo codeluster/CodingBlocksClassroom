@@ -13,28 +13,28 @@ public class GraphClient {
         graph.addVertex("E");
         graph.addVertex("F");
         graph.addVertex("G");
-
         graph.addEdge("A", "B", 1);
-        graph.addEdge("B", "C", 2);
+        graph.addEdge("B", "C", 1);
         graph.addEdge("C", "D", 10);
-        graph.addEdge("D", "A", 5);
+        graph.addEdge("D", "A", 9);
         graph.addEdge("D", "E", 15);
         graph.addEdge("E", "F", 2);
         graph.addEdge("E", "G", 5);
         graph.addEdge("F", "G", 6);
+
+//        graph.addEdge("B", "D", -9);
 
 //        graph.removeVertex("D");
 
 //        System.out.println(graph.hasPath("A", "F"));
 //        graph.BinaryFirstTraversal();
 //        graph.DepthFirstTraversal();
-
 //        System.out.println(graph.isConnected());
 //        System.out.println(graph.isCyclic());
 //        System.out.println(graph.isTree());
 //        System.out.println(graph.getCyclicComponents());
 
-//        graph.MSTPrims().display();
+//        graph.MSTPrim().display();
         graph.Dijkstra("A");
 
     }

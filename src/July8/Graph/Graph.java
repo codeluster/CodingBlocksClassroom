@@ -448,7 +448,7 @@ public class Graph {
         return this.isConnected() && !this.isCyclic();
     }
 
-    public Graph MSTPrims() {
+    public Graph MSTPrim() {
 
         Heap<PrimsPair> heap = new Heap<PrimsPair>();
         HashMap<String, PrimsPair> processed = new HashMap<>();
@@ -517,6 +517,7 @@ public class Graph {
         }
     }
 
+    //Dijkstra is single source shortest path algorithm
     public void Dijkstra(String source) {
 
         Heap<DijkstraPair> heap = new Heap<>();
@@ -572,7 +573,6 @@ public class Graph {
 
     }
 
-    //Dijkstra is single source shortest path algorithm
     public class DijkstraPair implements Comparable<DijkstraPair> {
 
         Vertex vertex;
