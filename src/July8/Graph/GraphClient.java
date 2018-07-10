@@ -16,7 +16,7 @@ public class GraphClient {
 
         graph.addEdge("A", "B", 1);
         graph.addEdge("B", "C", 2);
-        graph.addEdge("C", "D", 4);
+        graph.addEdge("C", "D", 10);
         graph.addEdge("D", "A", 5);
         graph.addEdge("D", "E", 15);
         graph.addEdge("E", "F", 2);
@@ -34,7 +34,8 @@ public class GraphClient {
 //        System.out.println(graph.isTree());
 //        System.out.println(graph.getCyclicComponents());
 
-        graph.MSTPrims().display();
+//        graph.MSTPrims().display();
+        graph.Dijkstra("A");
 
     }
 

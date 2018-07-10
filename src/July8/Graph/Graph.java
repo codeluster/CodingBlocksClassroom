@@ -501,7 +501,6 @@ public class Graph {
 
         }
 
-
         return minimumSpanningTree;
     }
 
@@ -514,6 +513,75 @@ public class Graph {
 
         @Override
         public int compareTo(PrimsPair o) {
+            return o.cost - this.cost;
+        }
+    }
+
+    public void Dijkstra(String source) {
+
+        Heap<DijkstraPair> heap = new Heap<>();
+        HashMap<String, DijkstraPair> processed = new HashMap<>();
+
+        // Make a pair of every vertex
+        for (String key : vertices.keySet()) {
+
+            DijkstraPair pair = new DijkstraPair();
+            pair.vertex = vertices.get(key);
+            pair.vName = key;
+            pair.cost = Integer.MAX_VALUE;
+            pair.path_so_far = null;
+
+            if (key.equals(source)) {
+                pair.cost = 0;
+                pair.path_so_far = key;
+            }
+
+            // Put pair in heap and in processed HashMap
+            heap.insert(pair);
+            processed.put(key, pair);
+        }
+
+        // Work till the heap is not empty
+        while (!heap.isEmpty()) {
+
+            // Remove pair from heap and from graph
+            DijkstraPair removedPair = heap.remove();
+            processed.remove(removedPair.vName);
+
+            System.out.println(removedPair.vName + " via " + removedPair.path_so_far);
+
+            // Update neighbours present in the heap
+            for (String neighbour : removedPair.vertex.neighbours.keySet()) {
+
+                if (processed.containsKey(neighbour)) {
+
+                    int oldCost = processed.get(neighbour).cost;
+                    int newCost = vertices.get(removedPair.vName).neighbours.get(neighbour);
+
+                    if (newCost < oldCost) {
+                        processed.get(neighbour).cost = newCost;
+                        processed.get(neighbour).path_so_far = removedPair.path_so_far + neighbour;
+                        heap.priorityUpdate(processed.get(neighbour));
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    //Dijkstra is single source shortest path algorithm
+    public class DijkstraPair implements Comparable<DijkstraPair> {
+
+        Vertex vertex;
+        String vName;
+        int cost;
+        String path_so_far;
+
+        @Override
+        public int compareTo(DijkstraPair o) {
             return o.cost - this.cost;
         }
     }
