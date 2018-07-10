@@ -27,6 +27,8 @@ public class Heap<TREO extends Comparable<TREO>> {
 
     private void upheapify(int childIndex) {
 
+        if (childIndex < 0 || childIndex > this.data.size()) return;
+
         TREO childData = this.data.get(childIndex);
         int parentIndex = (childIndex - 1) / 2;
         TREO parenData = this.data.get(parentIndex);
@@ -85,6 +87,21 @@ public class Heap<TREO extends Comparable<TREO>> {
 
     private boolean isLarger(TREO obj1, TREO obj2) {
         return obj1.compareTo(obj2) < 0;
+    }
+
+    public boolean isEmpty() {
+        return this.getSize() == 0;
+    }
+
+    public void priorityUpdate(TREO item) {
+        int index = -1;
+
+        for (int jo = 0; jo < this.data.size(); jo++) {
+            if (this.data.get(jo) == item) index = jo;
+        }
+
+        this.upheapify(index);
+
     }
 
 }
