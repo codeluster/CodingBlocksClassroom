@@ -518,6 +518,7 @@ public class Graph {
     }
 
     //Dijkstra is single source shortest path algorithm
+    // Doesn't work for negative costs
     public void Dijkstra(String source) {
 
         Heap<DijkstraPair> heap = new Heap<>();
